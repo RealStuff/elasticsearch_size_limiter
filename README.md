@@ -76,7 +76,7 @@ min_num_indices: 2
 #### With cmdline options
 
 ```
-./es_size_limitter.py --es_host 'https://myserver:9200' --es_user elastic --es_pass mypass --ca_path '/etc/pki/ca-trust/source/anchors/mycacert.pem'  --limits '[{"index_pattern":"limiter-test-index-foo","max_size":"10m"},{"index_pattern":"limiter-test-index-bar","max_size":"10m","min_num_indices": 2}]' --log_level info --log_path 
+./es_size_limitter.py --es_host 'https://myserver:9200' --es_user elastic --es_pass mypass --ca_path '/etc/pki/ca-trust/source/anchors/mycacert.pem'  --limits '[{"index_pattern":"limiter-test-index-foo","max_size":"10m"},{"index_pattern":"limiter-test-index-bar","max_size":"10m","min_num_indices": 2}]' --log_level info --log_path '/var/log/es_size_limiter/es_size_limiter.log'
 ```
 
 ### How do I get set up? ###
