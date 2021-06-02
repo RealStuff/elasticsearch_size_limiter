@@ -34,8 +34,6 @@ Please note that mandatory means either configured in cmdline or yaml file
 | es_ca_path  |               |          | Full path to the elasticsearch CA cert| 
 | settings    |               |          | Path to settings yaml file. Can be either absolute or relative. |
 | limits      | x             |          | limits in json format. Allowed attributes are described below |
-| chunk_count |               | 1        | Number of chunks to be sent (bulk indexing)
-| chunk_size  |               | 500      | Number of documents sent per chunk (bulk index request) |
 | log_level   |               | warning  | Case insensitive. Allowed values: DEBUG,INFO,WARNING,ERROR,CRITICAL |
 | log_path    |               |          | Path to log file: Example: /var/log/es_size_limiter/es_size_limiter.log |
 | help        |               |          | Helptext  |
