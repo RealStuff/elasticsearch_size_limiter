@@ -1,0 +1,16 @@
+---
+# es_size_limitter.py settings file
+es_host: https://myserver:9200
+es_user: elastic
+es_pass: mypass
+es_ca_path: /etc/pki/ca-trust/source/anchors/mycacert.pem
+log_level: INFO
+log_path: /var/log/es_size_limiter/es_size_limiter.log
+# limits contains a list of limit configurations
+limits:
+- index_pattern: limiter-test-index-foo*
+  max_size: 20m
+  #min_num_indices: 1 # Defaults to 1
+- index_pattern: limiter-test-index-bar*
+  max_size: 20m
+  min_num_indices: 2 # Defaults to 1
