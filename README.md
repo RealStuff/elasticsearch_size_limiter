@@ -21,10 +21,11 @@ The script can produce detailed logs to protocol each step. Each log contains a 
 The script exits with a nagios comliant commandline output (currently without performance data) and a nagios comliant exit code.
 
 
+### Configuration options
 
-
-Configuration options:
 Please note that mandatory means either configured in cmdline or yaml file
+
+**Settingsettings**
 | Parameter   | Mandatory     | Default  | Description   |
 | :---------- | :------------ | :------- | :------------ |
 | es_host     | x             |          | Elasticsearch host (currently only one supported) |
@@ -32,14 +33,14 @@ Please note that mandatory means either configured in cmdline or yaml file
 | es_pass     | x             |          | Elasticsearch password |
 | es_ca_path  |               |          | Full path to the elasticsearch CA cert| 
 | settings    |               |          | Path to settings yaml file. Can be either absolute or relative. |
-| limits      | x             |          | limits in json format |
+| limits      | x             |          | limits in json format. Allowed attributes are described below |
 | chunk_count |               | 1        | Number of chunks to be sent (bulk indexing)
 | chunk_size  |               | 500      | Number of documents sent per chunk (bulk index request) |
 | log_level   |               | warning  | Case insensitive. Allowed values: DEBUG,INFO,WARNING,ERROR,CRITICAL |
 | log_path    |               |          | Path to log file: Example: /var/log/es_size_limiter/es_size_limiter.log |
 | help        |               |          | Helptext  |
 
-Limit settings
+**Limit settings**
 | Parameter        | Mandatory     | Default  | Description                                                                             |
 | :--------------- | :------------ | :------- | :-------------------------------------------------------------------------------------- |
 | index-pattern    | x             |          | The index-pattern to match                                                              |
