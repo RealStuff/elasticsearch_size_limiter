@@ -69,7 +69,7 @@ min_num_indices: 2
 ```
 
 ```
-./es_size_limiter.py --settings settings.yml --log_level INFO
+./es_size_limiter.py --settings settings.yml
 ```
 
 
