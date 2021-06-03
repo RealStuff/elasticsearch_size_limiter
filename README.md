@@ -88,7 +88,11 @@ min_num_indices: 2
 
 2. Run the script
 
+## Additional content
 
+### Kibana
+
+If the logs produced by the script are ingested to elasticsearch, the ndjson file in the kibana folder can be used to import a saved search to view and analyse the logs in Kibana.
 
 ## Contribution guidelines ###
 
