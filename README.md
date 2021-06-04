@@ -1,10 +1,10 @@
 # elasticsearch size limiter
 
-Script to limit space used by indices of an elasticsearch cluster
+Delete Elasticsearch indices based on used storage space.
 
 ## What is this repository for?
 
-The es_size_limiter script can be used to limit the total space of indices matching an index-pattern to a configured maximum size.
+As there is no feature in Elasticsearch to delete indices based on their used space. The only available feature in Elasticsearch is to delete indices based on index creation time. There for the es_size_limiter script can be used to limit the total space of indices matching an index-pattern to a configured maximum size. This is how you can prevent full storage, even if you should have massive increase of the log rate.
 
 ## How does it work
 
