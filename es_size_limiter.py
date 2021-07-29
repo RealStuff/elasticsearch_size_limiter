@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Usage example
-# ./es_size_limitter.py --es_host 'https://t-elk01-bfl.intra.realstuff.ch:9200' --es_user elastic --es_pass mysecret --ca_path '/Users/flb/sources/bitbucket.org/realstuff/rs-ansible/files/ssl/CA/intra.realstuff.ch.crt'  --limits '[{"index_pattern":"limiter-test-*","max_size":"10m"}]' --log_level info
+# ./es_size_limitter.py --es_host 'https://t-elk01-bfl.intra.realstuff.ch:9200' --es_user elastic --es_pass mysecret --ca_path '/etc/pki/ca-trust/source/anchors/mycacert.pem'  --limits '[{"index_pattern":"limiter-test-*","max_size":"10m"}]' --log_level info
 # ./es_size_limiter.py --settings settings.yml
 #
 #
@@ -122,6 +122,10 @@ def init_logging(settings):
 
     # Add log handlers
     logger.addHandler(handler)
+
+    # Disable elasticsearch logs
+    es_loggger = logging.getLogger("elasticsearch")
+    es_loggger.disabled = True 
 
     return logger
 
@@ -330,5 +334,5 @@ except Exception as err:
     exit_crit(err)
 else:
     time.sleep(10 / 1000) # Make sure the timestamp is different than the second last
-    logger.info('{0} - message="limiter job finished. Deleted {1} indices with a total size of {2}", num_indices_deleted="{1}", size_total={2}, index_pattern=[{3}] action="exit", reason="limiter job finished", outcome="success"'.format(trace_id, metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), ','.join(metrics.index_patterns)))
+    logger.info('{0} - message="limiter job finished. Deleted {1} indices with a total size of {2}", num_indices_deleted="{1}", size_total={2}, index_pattern=[{3}], action="exit", reason="limiter job finished", outcome="success"'.format(trace_id, metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), ','.join(metrics.index_patterns)))
     exit(metrics.status_code, "Limiter job finished. Deleted %d indices with a total size of %s. %d indices skipped. Index-patterns[%s]" % ( metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), metrics.indices_skipped, ','.join(metrics.index_patterns) ) )

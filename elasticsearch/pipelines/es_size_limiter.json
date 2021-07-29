@@ -1,0 +1,44 @@
+PUT _ingest/pipeline/es_size_limiter
+{
+  "description": "Pipeline for elasticsearch size limiter logs",
+  "processors": [
+    {
+      "dissect": {
+        "description": "Dissect the log message",
+        "field": "message",
+        "pattern": "%{@metadata.timestamp} - %{process.name} - %{log.level} - %{trace.id} - %{message}"
+      }
+    },
+    {
+      "kv": {
+        "field": "message",
+        "target_field": "es_size_limiter",
+        "field_split": ", ",
+        "value_split": "=",
+        "strip_brackets": true
+      }
+    },
+    {
+      "set": {
+        "field": "message",
+        "value": "%{es_size_limiter.message}"
+      },
+      "remove": {
+        "field": "es_size_limiter.message"
+      }
+    },
+    {
+      "split": {
+        "field": "es_size_limiter.index_pattern",
+        "separator": "," 
+      }
+    },
+    {
+      "date" : {
+        "field" : "@metadata.timestamp",
+        "formats" : ["yyyy-MM-dd HH:mm:ss,SSS"],
+        "timezone" : "Europe/Zurich"
+      }
+    }
+  ]
+}
