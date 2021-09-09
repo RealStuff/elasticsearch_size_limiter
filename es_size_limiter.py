@@ -242,7 +242,7 @@ def limit_size(es, limit, metrics):
     # Get list of indices
     indices= es.cat.indices(index=index_pattern, format='json', bytes='b', h='index,status,id,docs.count,store.size,creation.date.string', s='creation.date.string')
     if (len(indices) == 0):
-        logger.error('{0} - message="No indices found matching pattern {1}", index_pattern="{1}", action="noop" reason="no matching indices", outcome="failure"'.format(trace_id, index_pattern))    
+        logger.error('{0} - message="No indices found matching pattern {1}", index_pattern="{1}", action="noop", reason="no matching indices", outcome="failure"'.format(trace_id, index_pattern))    
         metrics.set_status_code(CRITICAL)
         return
 
@@ -334,5 +334,5 @@ except Exception as err:
     exit_crit(err)
 else:
     time.sleep(10 / 1000) # Make sure the timestamp is different than the second last
-    logger.info('{0} - message="limiter job finished. Deleted {1} indices with a total size of {2}", num_indices_deleted="{1}", size_total={2}, index_pattern=[{3}], action="exit", reason="limiter job finished", outcome="success"'.format(trace_id, metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), ','.join(metrics.index_patterns)))
+    logger.info('{0} - message="limiter job finished. Deleted {1} indices with a total size of {2}", num_indices_deleted="{1}", size_total={3}, index_pattern=[{4}], action="exit", reason="limiter job finished", outcome="success"'.format(trace_id, metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), metrics.bytes_deleted, ','.join(metrics.index_patterns)))
     exit(metrics.status_code, "Limiter job finished. Deleted %d indices with a total size of %s. %d indices skipped. Index-patterns[%s]" % ( metrics.indices_deleted, humanfriendly.format_size(metrics.bytes_deleted), metrics.indices_skipped, ','.join(metrics.index_patterns) ) )

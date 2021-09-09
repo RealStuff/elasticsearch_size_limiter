@@ -4,28 +4,30 @@ Delete Elasticsearch indices based on used storage space.
 
 ## What is this repository for?
 
-As there is no feature in Elasticsearch to delete indices based on their used space. The only available feature in Elasticsearch is to delete indices based on index creation time. There for the es_size_limiter script can be used to limit the total space of indices matching an index-pattern to a configured maximum size. This is how you can prevent full storage, even if you should have massive increase of the log rate.
+There is no feature in Elasticsearch to delete indices based on their used space. The only available feature in Elasticsearch is to delete indices based on index creation time. Therefore the es_size_limiter script can be used to limit the total space of indices matching an index-pattern to a configured maximum size. This is how you can prevent full storage, even if you should have massive increase of the log rate.
 
 ## How does it work
 
 The script takes a list of limiter settings. A setting contains a index-pattern, a maximum size and optional parameters such as the minimum number of indices to keep.
 
 The script connects to an elasticsearch cluster and does the following steps for each setting in sequence:
-Get the total size of the matching indices. If the total size of the indices is higher than the maximum size and the number of incices is higher than the minimal number of matching indices, the oldest index is deleted. Then the procedure is repeated until either the minimal number of indices is reached or the total size is lower than the maximum size.
+- Get the total size of the matching indices.    
+  If the total size of the indices is higher than the maximum size and the number of incices is higher than the minimal number of matching indices, the oldest index is deleted.
+- Then the procedure is repeated until either the minimal number of indices is reached or the total size is lower than the maximum size.
 
 To simplify the configuration, all commandline parameters can be configured in a yaml file as well. A mix of the two is supported.
 When used on both, the commandline parameter takes precedence.
 
-The script can produce detailed logs to protocol each step. Each log contains a trace id which will change each time when the script is run. This is useful to filter out all logs of a given run, e.g. when the logs are loaded to elasticsearch.
+The script can produce detailed logs to protocol each step. Each log contains a trace-id which will change each time the script runs. This is useful to filter out all logs of a given run, e.g. when the logs are loaded to elasticsearch.
 
-The script exits with a nagios comliant commandline output (currently without performance data) and a nagios comliant exit code.
+The script exits with a nagios compliant commandline output (currently without performance data) and a nagios compliant exit code.
 
 
 ### Configuration options
 
 Please note that mandatory means either configured in cmdline or yaml file
 
-**Settingsettings**
+**Setting settings**
 | Parameter   | Mandatory     | Default  | Description   |
 | :---------- | :------------ | :------- | :------------ |
 | es_host     | x             |          | Elasticsearch host (currently only one supported) |
@@ -90,9 +92,21 @@ min_num_indices: 2
 
 ## Additional content
 
+### Scheduled runs
+
+There are many ways to run the script on a schedule, like cron-job, nagios compatible monitoring systems or Logstash (see below).
+
+### Logstash
+
+Logstash can be used to perjodically run the script and load the logs of the script to elasticsearch. An example can be found in the *logstash* directory.
+
+### Elasticsearch
+
+If the logs are loaded to elasticsearch, they can be enriched with a ingest-pipeline. The pipeline config can be found in the *elasticsearch/pipelines* directory.
+
 ### Kibana
 
-If the logs produced by the script are ingested to elasticsearch, the ndjson file in the kibana folder can be used to import a saved search to view and analyse the logs in Kibana.
+If the logs produced by the script are ingested to elasticsearch, the ndjson file in the kibana folder can be used to import a index-pattern and a saved search to view and analyse the logs in Kibana.
 
 ## Contribution guidelines ###
 
